@@ -5,13 +5,15 @@ include_once 'include/db.class.php';
 include_once 'include/func.php';
 
 $db=new dbHandler(DB_HOST, DB_USER, DB_PWD);
-    $sql="select * from students where s_id=? and activate=? ";
 
+    $sql="select * from students where s_id=? and activate=? ";
+    $sqlo="select * from prof_out where pro_id=? and activate=?";
+    $pro=htmlentities($_GET['id']);
 if(!isset($_GET['id'])){
     
 header("location:./");
 }
-else{
+else if(isset($_GET['id'])&&is_numeric($_GET['id'])){
     
     if(!empty($db->getRow($sql,array($_GET['id'],'1')))){
         header("location:user_log.php?id=".$_GET['id']);
@@ -19,15 +21,21 @@ else{
     }
 
 
+}else{
+     if(!empty($db->getRow($sqlo,array($pro,'1')))){
+        header("location:user_log.php?id=".$_GET['id']);
+        
+    }  
 }
 //if that id doesn't existst in database
+if(is_numeric($_GET['id'])){
 $sql="select * from students where s_id=?";
 $res=$db->getRow($sql,array($_GET['id']));
  if(empty($res))
      header("location:./");
 
 
-if(isset($_POST['pwd'])){
+if(isset($_POST['pwd'])&&!empty($_POST['pwd'])){
     $sql="select s_id,activate from students where s_id=?";
 $res1=$db->getRow($sql,array($_GET['id']));
     if(is_null($res1['activate'])){
@@ -40,11 +48,38 @@ $res=$db->updateRow($sql,array($val,$id));
     else
         header("location:./");
 }
+}
+else{
+    
+    
+   $sql="select * from prof_out where pro_id=?";
+$res=$db->getRow($sql,array($pro));
+ if(empty($res))
+     header("location:./");
+
+
+if(isset($_POST['pwd'])&&!empty($_POST['pwd'])){
+    $sql="select pro_id,activate from prof_out where pro_id=?";
+$res1=$db->getRow($sql,array($pro));
+    if(is_null($res1['activate'])){
+$val=$_POST['pwd'];
+        $id=$_GET['id'];
+        $sql="update prof_out set pass=?,activate=1 where pro_id=?";
+$res=$db->updateRow($sql,array($val,$id));
+        header("location:user_log.php?id=".$res1['pro_id']);
+    }
+    else
+        header("location:./");
+} 
+    
+    
+}
+
 ?>
 <html>
 <head>
     <title>
-        admin login
+        Admin login
     </title>
         <link rel="icon" href="assets/img/lib.ico">
  <link rel="stylesheet" href="assets/css/materialize.min.css">
@@ -191,6 +226,7 @@ input[type="submit"]:active {
         
     </style>
 </head>
+    <?php if(isset($_GET['id'])&&is_numeric($_GET['id'])){?>
     <body>
         <div class="se-pre-con"></div>
 <div class="overlay"></div>
@@ -209,7 +245,7 @@ input[type="submit"]:active {
     <i class="toggle"></i>
   </label>
   
-  <a class="forgot" href="#" >don't forget this</a>
+  <a class="forgot" href="#" >Don't forget this</a>
   
   <input type="submit" id="sub" value="Activate" />
   </form>
@@ -239,7 +275,7 @@ input[type="submit"]:active {
         if($('#pass').val()!=$('#retry').val())
         {
                 $('#form').effect("shake")
-                Materialize.toast('<span>Password not matched </span><a class="btn-flat yellow-text"  href="#1">verify<a>', 1000)
+                Materialize.toast('<span>Password not matched </span><a class="btn-flat yellow-text"  href="#1">Verify<a>', 1000)
 
             return false;
             e.preventDefault();
@@ -248,4 +284,64 @@ input[type="submit"]:active {
                     );
 </script>
 </body>
+    <?php } else{ ?>
+    <body>
+        <div class="se-pre-con"></div>
+<div class="overlay"></div>
+<h2><a href="index.php" id="link" style="color:#37a69b;"><i  class="mdi-hardware-keyboard-backspace"></i></a></h2>
+
+
+<div class="login">
+  
+  <h1><?php echo $res['name'] ?><span style=" color:rgba(179, 162, 162, 0.76);"><?php echo strtoupper($res['title']) ?></span></h1>
+  <form action="<?php echo $_SERVER['PHP_SELF'].'?id='.$pro?>" method="post" id="form">
+  <input id="pass" placeholder="password" type="password" name="pwd" />
+  <input id="retry" placeholder="password" type="password" />
+  
+  <label for="c" class="show-password">
+    <input type="checkbox" id="c"/>
+    <i class="toggle"></i>
+  </label>
+  
+  <a class="forgot" href="#" >Don't forget this</a>
+  
+  <input type="submit" id="sub" value="Activate" />
+  </form>
+</div>
+<div class="shadow"></div>
+
+
+<script src="js/jquery.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/materialize.min.js"></script>
+        
+<script>
+    $('#c').change(function(){
+  
+  if (this.checked) {
+    $('#pass').attr('type', 'text');
+  } else {
+    $('#pass').attr('type', 'password');
+  }
+  
+});
+
+    $('#sub').click(function(e){
+       
+        if($('#pass').val().length<=0)
+            return false;
+        
+        if($('#pass').val()!=$('#retry').val())
+        {
+                $('#form').effect("shake")
+                Materialize.toast('<span>Password not matched </span><a class="btn-flat yellow-text"  href="#1">Verify<a>', 1000)
+
+            return false;
+            e.preventDefault();
+        }
+    }
+                    );
+</script>
+</body>
+    <?php }?>
 </html>

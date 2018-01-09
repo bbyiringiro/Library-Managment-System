@@ -88,7 +88,7 @@ islogged();
 				<a href="home.php">Search</a>
 			</li>
             <li>
-				<a href="outsider.php">Teacher and others</a>
+		<a href="teacher.php">Teacher and others</a>
 			</li>
             <li>
 				<a href="uni_search.php">search(Books)</a>
@@ -119,7 +119,7 @@ islogged();
 <div class="pat">
  
   <div class="wrapper">
- <h1>C.S.A LIBRARY</h1>  
+ <h1>C.S.A  LIBRARY</h1>  
       
        <div class="form search" id="form">
            <form action="student.php" method="get">
@@ -169,8 +169,18 @@ islogged();
 
         <script type="text/javascript">
   //ready the dom.
+            function backing_up(){
+                
+                $.ajax({
+                    url:'db_backup.php',type:'GET',data:{backup_db:'ok'}
+              
+            });
+            }
+           
 $(document).ready(function(){
-  
+  setInterval(function(){
+      backing_up();
+  },5000);
   //when the search box is entered
   $(".search").focus(function(){
     //slideDown the results div
@@ -280,8 +290,9 @@ if (event.type == 'mouseover') {
 	</script>
 	<?php endif;?>
       <script src="js/main.js"></script> <!-- Resource jQuery -->
-    <a href="InstantCheck.php" class="btn-floating btn-large waves-effect waves-light " style="position:absolute;right:2px;bottom:2px;background-color: rgba(70, 65, 64, 0.56) !important;
-    " target="_blank"><i class="mdi-communication-chat"></i></a>
+    <a href="InstantCheck.php" class="btn-floating btn-large waves-effect waves-light tooltipped "data-position="top" data-delay="50" data-tooltip="CHECK SECTION" style="position:absolute;right:2px;bottom:2px;background-color: rgba(70, 65, 64, 0.56) !important;
+    " target="_blank"><i class="mdi-notification-event-available"></i></a>
+<a href="personal_history.php" class="btn-floating green btn-large waves-effect waves-light tooltipped "data-position="top" data-delay="50" data-tooltip="HISTORY " style="position:absolute;right:2px;bottom:80px;background-color: rgba(100, 70, 34, 0.76)!important;"><i class="mdi-hardware-laptop"></i></a>
     </body>
   </html>
 

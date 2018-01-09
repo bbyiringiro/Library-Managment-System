@@ -5,8 +5,8 @@ include_once '../include/db.class.php';
 include_once '../include/config.php';
 $db=new dbHandler(DB_HOST, DB_USER, DB_PWD,NULL);
 
-$sql = "select s.s_name,s.s_id,s.class,s.section,count(a.s_id) 'count' from students s join activity a on s.s_id=a.s_id and a.fine=0 group by a.s_id order by s.class asc,s.section asc";
-$sql2="select b.book_title  b_name ,b.book_no 'nbr'  from activity a inner join books b on a.book_no=b.book_no where a.s_id=? and a.fine=0 ";
+$sql = "select s.s_name,s.s_id,s.class,s.section,count(a.s_id) 'count' from students s join activity a on s.s_id=a.s_id and a.fine=0 and a.outsider=0 group by a.s_id order by s.class asc,s.section asc";
+$sql2="select b.book_title  b_name ,b.book_no 'nbr'  from activity a inner join books b on a.book_no=b.book_no where a.s_id=? and a.fine=0 and a.outsider=0 ";
 
 $stmt = $db->db->prepare($sql);
 $stmt->execute();

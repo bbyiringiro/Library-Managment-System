@@ -11,14 +11,13 @@ if (isset($_GET['stud'])&& !empty($_GET['stud'])){
                         header("location:./");
 	$stud=$_GET['stud'];
 $db=new dbHandler(DB_HOST, DB_USER, DB_PWD);
-$res=$db->getRows('select *  from students where s_id=? limit 1 ',array($stud));
-if(empty($res))
+$res=$db->getRows('select *  from students where s_id=? limit 1 ',array($stud));if(empty($res))
 header("location:404");
 
 //sql about the pending books
-$sql="select b.book_title  b_name ,b.book_no 'nbr',a.due_date 'date_borrowed',a.return_date 'return' from activity a inner join books b on a.book_no=b.book_no where a.s_id=? and a.fine=0 and a.outsider=0 order by date_borrowed desc";
+$sql="select b.book_title  b_name ,b.book_no 'nbr',a.due_date 'date_borrowed',a.return_date 'return' ,a.current_class 'current' from activity a inner join books b on a.book_no=b.book_no where a.s_id=? and a.fine=0 and a.outsider=0 order by date_borrowed desc";
 //sql about the the history
-$sql2="select b.book_title  b_name ,b.book_no 'nbr',a.due_date 'date_borrowed',a.return_date 'return'  from activity a inner join books b on a.book_no=b.book_no where a.s_id=? and a.fine=1 and a.outsider=0 order by date_borrowed desc ";
+$sql2="select b.book_title  b_name ,b.book_no 'nbr',a.due_date 'date_borrowed',a.return_date 'return' ,a.current_class 'current' from activity a inner join books b on a.book_no=b.book_no where a.s_id=? and a.fine=1 and a.outsider=0 order by date_borrowed desc ";
  /* codes about fetching transaction from server --> */
 //pending
          $pending=$db->getRows($sql,array($stud));
@@ -74,7 +73,7 @@ $studentpic='pictures/'."nopic.jpg";
   <label for="toggle2" style="position:absolute;right:0;top:-0.5em;"><i class="label mdi-navigation-arrow-drop-down-circle" style="font-size:2em;padding:0px;"></i></label>
   <ul class="animate">
     
-    <a href="index1.php" style="color:black"><li class="animate">login (<i style="color:blue;font-size:10px">only admins</i>)<i class="fa fa-cog float-right"></i></li></a>
+    <a href="index1.php" style="color:black"><li class="animate">Login (<i style="color:blue;font-size:10px">Only admins</i>)<i class="fa fa-cog float-right"></i></li></a>
   </ul>
 </dropdown>
      
@@ -112,15 +111,6 @@ $studentpic='pictures/'."nopic.jpg";
 
 		<span class="cd-marker color-1"></span>	
 	</nav> <!-- .cd-3d-nav-container -->
-      
-        
-
-
-
-        
-        
-        
-  
         <div class="container">
               <div class="row valign-wrapper card-panel">
                  <div class="col m5">
@@ -129,12 +119,13 @@ $studentpic='pictures/'."nopic.jpg";
         <div class="col m10">
           <div class="card">
             <div class="card-image">
-              <img src="<?php echo $studentpic ;?>">
-              <span class="card-title"><?php $n=explode(' ',$res[0]['s_name']);echo $n[0];?></span>
-            </div>
+              <img src="<?php echo $studentpic ;?>">         
+              <span class="card-title"><?php $n=explode(' ',$res[0]['s_name']);echo strtoupper($n[0]);?></span>
+            </div>          
             <div class="card-content">
               <p><b>Name</b>:<?php echo strtoupper($res[0]['s_name']);?></p>
-              <p><b>Class</b> <?php echo ucwords($res[0]['class']).' '.ucwords( $res[0]['section']);?></p>
+       <p><b>Class</b> <?php echo ucwords($res[0]['class']).' '.ucwords( $res[0]['section']);?></p>
+<input type="hidden" id="ahoyigaga" value="<?php echo ucwords($res[0]['class']).' '.ucwords( $res[0]['section']);?>"/>
               <p><b>Number</b> <?php echo $res[0]['s_id'] ?></p>
             </div>
             <div class="card-action">
@@ -155,18 +146,18 @@ $studentpic='pictures/'."nopic.jpg";
                           <div class="row">
                           <div class="input-field col m10">
           <i class="mdi-action-account-circle prefix"></i>
-          <input id="icon_prefix" type="text"  class="validate">
+          <input id="icon_prefix" autocomplete="off" type="text"  class="validate">
           <label for="icon_prefix">Enter book ID</label>
         
         </div>
                               <div class="col m2">
-                                  <a class=" btn">lend</a>
+                                  <a class=" btn">Lend</a>
                               </div>
                           </div>
                           <div class="row">
                               <div class="collection book-suggest">
                                   
-    <a href="#!" class="collection-item">Search for a book using it's number<span class="badge">pick</span></a>
+    <a href="#!" class="collection-item">Search for a book using it's number<span class="badge">Pick</span></a>
 
    
     
@@ -201,8 +192,8 @@ $studentpic='pictures/'."nopic.jpg";
               <th data-field="name">Name</th>
               <th data-field="price">ISBN</th>
               <th data-field="due_date">Due date</th>
-              <th data-field="day">Return<br>
-              </th> <th data-field="day">Current<br>
+              <th data-field="day">To be returned<br>
+              </th> <th data-field="day">
                   class
               </th> <th data-field="day">
               </th> <th data-field="day">
@@ -231,6 +222,7 @@ $c++;
             <td class="book-nbr"><?php echo $row['nbr'] ?></td>
             <td><?php echo $row['date_borrowed'] ?></td>
             <td><?php echo $row['return'] ?></td>
+            <td><?php echo $row['current'] ?></td>
           </tr>
          
         
@@ -252,8 +244,8 @@ $c++;
               <th data-field="name">Name</th>
               <th data-field="price">ISBN</th>
               <th data-field="due_date">due date</th>
-              <th data-field="day">returned<br>
-                  day
+              <th data-field="day">Day<br>
+                  returned
               </th>
           </tr>
         </thead>
@@ -295,75 +287,13 @@ foreach ($hist as $row2):
         
                 
             </div><!--end of second row -->
-            
-            
-            <div class="row">
-                 <div class="activity card-panel">
-                 
-                 
-        
-                
- 
-            
-            
-            </div>
-                
-            </div>
-            
-           
-        </div>
-        
+                  </div>
         
   <!-- Modal Trigger -->
 
  <!-- Modal Structure -->
   <div id="modal1" class="modal modal-fixed-footer">
-    <div class="modal-content">
-      
-        <form>
-                    <div class="input-field col m12">
-                       <i class="mdi-av-my-library-books prefix"></i>
-                     <input id="book_name" type="text" class="validate">
-                     <label for="book_name">book title</label>
-                    </div>
-                    <div class="input-field col m12">
-                       <i class="mdi-hardware-keyboard-hide prefix"></i>
-                     <input id="book_id" type="text" class="validate">
-                     <label for="book_id">book id</label>
-                    </div>
-                    <div class="input-field col m12">
-                       <i class="mdi-editor-mode-edit prefix"></i>
-                     <input id="author" type="text" class="validate">
-                     <label for="author">Author</label>
-                    </div>
-                        
-                    <div class="input-field col m12">
-                       <i class="mdi-editor-mode-edit prefix"></i>
-                     <input id="publisher" type="text" class="validate">
-                     <label for="publisher">publisher</label>
-                    </div>
-                    
-                       <div class="input-field col s12">
-    <select id="cat">
-      <option value="" disabled selected>select category</option>
-      <option value="1">computer science</option>
-      <option value="1">novel</option>
-      <option value="1">physics</option>
-      <option value="1">biology</option>
-      <option value="1">chemistry</option>
-      <option value="1">english</option>
-    </select>
-    <label>class</label>
-  </div>
-                    
-     
-                    
-    </form>
-        
-        
-        
-    </div>
-    <div class="modal-footer">
+        <div class="modal-footer">
         <div class="row">
             <div class="col s2">
                 
@@ -376,15 +306,10 @@ foreach ($hist as $row2):
             </div>
             <div class="col s10">
                 <a id="addbook" data-status="0" class="btn-floating btn-large waves-effect waves-light teal right" style="margin-top:-5px; right:0;"><i class="mdi-content-add"></i></a>
-      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">close</a>
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
             </div>
             
-        </div>
-        
-        
-        
-                    
-    </div>
+        </div></div>
   </div>
         
         
@@ -397,10 +322,11 @@ foreach ($hist as $row2):
         <script src="js/jquery-ui.min.js" type="text/javascript"></script>
         <script src="js/materialize.js" type="text/javascript"></script>
         <script src="js/main.js" type="text/javascript"></script>
-        <script type="text/javascript">
-           
-  
+  <script type="text/javascript">
+
+      
         $(document).ready(function(){
+var curr=$('#ahoyigaga').val();
             /*
                $(window).ready(function(){
                 $(window).on("contextmenu",function(){
@@ -421,7 +347,7 @@ foreach ($hist as $row2):
         			$('.book-suggest').html('');
         			var results =jQuery.parseJSON(data);
                     if($.isEmptyObject(results)){
-                        $('.book-suggest').html('<div class="not-found blue-grey-text white row valign-wrapper"><div class="col s2"><i class="mdi-action-info medium"> </i></div><div class="col s8">that book is not found, first add it  in database</div><div class="col s2"><a class="btn-floating btn-large waves-effect waves-light red modal-trigger" href="#modal1"><i class="mdi-content-add"></i></a></div></div> '); $('.modal-trigger').leanModal();
+                        $('.book-suggest').html('<div class="not-found blue-grey-text white row valign-wrapper"><div class="col s2"><i class="mdi-action-info medium"> </i></div><div class="col s8">that book is not registered, go and ask librarian to register it</div><div class="col s2"></div></div> '); $('.modal-trigger').leanModal();
                     }
                     else{
         			$(results).each(function(key, value) {
@@ -432,6 +358,7 @@ foreach ($hist as $row2):
                     
                     $('.item').click(function(e) {
                         var dat=$('#date').val();
+                        
                         dat=' '+dat;
                         if(dat==' '){
                         $('#datepicker').effect('shake');
@@ -445,7 +372,7 @@ foreach ($hist as $row2):
         		    	//calling function to output on screen
                         thiss=$(this);
                         $('#datepicker').css({color:'black'})
-        		    	lendbook(nbr,name,dat,thiss);
+        		    	lendbook(nbr,name,dat,thiss,curr);
                         updateP_nbr();
         		    	
         		    })
@@ -458,12 +385,12 @@ foreach ($hist as $row2):
             
 
 
-    	    function lendbook(book_nbr,name,d,thiss)
+    	    function lendbook(book_nbr,name,d,thiss,curr)
     	    {
     	    	$.ajax({
         	    	 url: 'ajax/lend.php',
         	    	 type:'GET',
-        	    	 data:{lend:'',book_nbr:book_nbr,user:<?php echo $stud?>,date:d},
+        	    	 data:{lend:'',book_nbr:book_nbr,user:<?php echo $stud?>,date:d,current:curr},
 	success: function(msg){
 		if(msg==1){
             thiss.effect('shake');
@@ -473,7 +400,7 @@ foreach ($hist as $row2):
             var now=new Date();
             thiss.slideUp('5000');
             $('.no-pending').fadeOut();
-			$('#pending tbody').prepend('<tr>--> <td></td><td class="book-title">'+name+'</td><td class="book-nbr">'+book_nbr+'</td><td class="truncate">'+now+'</td><td>'+d+'</td><td class="status">0</td></tr>');
+			$('#pending tbody').prepend('<tr>--> <td>...</td><td class="book-title">'+name+'</td><td class="book-nbr">'+book_nbr+'</td><td class="truncate">'+now+'</td><td>'+d+'</td><td class="status">...</td></tr>');
                       $('.tooltipped').tooltip({delay: 50});
 
 		}
@@ -600,11 +527,10 @@ $('#book_id').keyup(function(){
         
         $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
-    selectYears: 15 // Creates a dropdown of 15 years to control year
-  });
+    selectYears: 1,// Creates a dropdown of 1 years to control year
+  min:true
+        });
         
-        
-
 </script>
     </body>
 </html>

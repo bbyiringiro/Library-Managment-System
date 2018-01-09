@@ -208,7 +208,7 @@ echo '<input type="hidden" value="1" id="error">';
     <br><i class="fa fa-unlock-alt"></i>
     <br>
     <h1>Log in</h1></div>
-    <span style="color:rgb(176, 176, 176">college library system</span>
+    <span style="color:rgb(176, 176, 176">College Library System</span>
     
   <div class="form">
   <form action="login.php" method="post">

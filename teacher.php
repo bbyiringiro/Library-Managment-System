@@ -23,7 +23,15 @@ islogged();
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <script src="js/modernizr.js"></script> <!-- Modernizr -->
         <style>
-           
+           #link{
+            position:absolute;
+            left:10px;top:10px;
+            box-shadow: 0 0 5px;
+        }
+        #link:hover{
+            box-shadow:0 0 50px;
+        }
+
       .preloader-wrapper{
       position:absolute;
       bottom:0px;
@@ -53,6 +61,8 @@ opacity: 0.84;
       </head>
 
 <body>
+<h2><a href="index.php" id="link" style="color:#37a69b;"><i  class="mdi-hardware-keyboard-backspace"></i></a></h2>
+
     <div class="se-pre-con"></div>
     
 <header class="cd-header">
@@ -95,7 +105,7 @@ opacity: 0.84;
 				<a href="home.php">Search</a>
 			</li>
             <li>
-				<a href="outsider.php">Teacher and others</a>
+				<a href="teacher.php">Teacher and others</a>
 			</li>
             <li>
 				<a href="uni_search.php">search(Books)</a>
@@ -161,7 +171,7 @@ opacity: 0.84;
     
      <div class="footer center">
 								Copyright &copy; 2015, Designed by 
-                                <a title="web designer" data-container="body" data-toggle="popover" data-placement="top" data-content="This web was designed by billy jason ,who's student and he has worked on many geek projects, he is good at both front-end  and server-side" rel="designer">Billy jason</a> 
+                                <a title="web designer" data-container="body" data-toggle="popover" data-placement="top" data-content="This web was designed by billy jason ,who's student and he has worked on many geek projects, he is good at both front-end  and server-side" rel="designer">Billy jason& Ndigande alain</a> 
 				in <a>Fi.inc</a></div>
     
     
@@ -170,7 +180,7 @@ opacity: 0.84;
     
     
      <!-- Modal Trigger -->
-  <a class="waves-effect waves-light btn modal-trigger blue" style="position:absolute;bottom:0;right:0" href="#modal1">register</a>
+  <a class="waves-effect waves-light btn modal-trigger blue" style="position:absolute;bottom:0;right:0" href="#modal1">Register</a>
 
   <!-- Modal Structure -->
   <div id="modal1" class="modal bottom-sheet">
@@ -189,17 +199,17 @@ opacity: 0.84;
         <div class="input-field col s12">
           <i class="mdi-notification-sms-failed prefix"></i>
           <input id="func" type="text" class="validate">
-          <label for="func">function</label>
+          <label for="func">Function</label>
         </div>
             
         <div class="input-field col s12">
           <i class="mdi-editor-attach-file prefix"></i>
           <input id="icon_t1" type="file" class="validate">
-          <label for="icon_t1">user photo</label>
+          <label for="icon_t1">User photo</label>
         </div>
       </div>
       <div class="input-field col s6">
-      <button class="btn" id="register">register</button>
+      <button class="btn" id="register">Register</button>
       </div>
     </form>
   </div>
@@ -223,10 +233,10 @@ opacity: 0.84;
                  
                      $('.modal-trigger').leanModal();
       $('#register').click(function(e){
-        e.preventDefault();
+
+          e.preventDefault();
             var func=$('#func').val();
             var name=$('#name').val();
-            
             
             $.ajax({
                 url: 'ajax/register.php',
@@ -290,8 +300,9 @@ if (keyword.length >= 2) {
 		success: function(data){
 			var results =jQuery.parseJSON(data);
 			$(results).each(function(key, value) {
+                var o_t=value.pro_id;
 				
-				$('#suggest').append('<li class="item" onClick="direct2('+value.id+')"><a href="student.php?stud='+value.id+'"><span class="name">' + value.name.toUpperCase()+ '</span><span class="right">'+value.title+'</span></a></li>');
+				$('#suggest').append('<li class="item" onClick="direct2('+o_t+')"><a href="outsider.php?stud='+o_t+'"><span class="name">' + value.name.toUpperCase()+ '</span><span class="right">'+value.title+'</span></a></li>');
                 
                 
                 $('.item').hover(function() {

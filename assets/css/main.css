@@ -90,6 +90,21 @@ if it's not present, don't show loader */
 #search:focus{
 	opacity: 1.0;
 }
+#seart{
+	height: 25px;
+	width: 180px;
+	font-weight: bold;
+	color: #FFF;
+	border-radius: 15px;
+	border: 1px solid transparent;
+	outline: none;
+	padding: 7px;
+	background: rgba(38, 37, 37, 0.81);
+	opacity: 0.6;
+}
+#seart:focus{
+	opacity: 1.0;
+}
 #search-container ul{
 	list-style: none;
 	margin: 0px;

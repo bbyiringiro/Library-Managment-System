@@ -11,6 +11,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'
 
 include_once 'include/db.class.php';
 include_once 'include/config.php';
+include_once 'include/func.php';
+    islogged();
 $db=new dbHandler(DB_HOST, DB_USER, DB_PWD,NULL);
 $sql = "select l_id,name from librarians where name=? and pwd= SHA1(?) limit 1";
 

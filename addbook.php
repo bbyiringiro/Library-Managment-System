@@ -43,6 +43,7 @@ if(isset($_GET["multiple"])){
 	
 $sql="insert into books(book_no,book_title,book_cat,book_author,publisher)values(?,?,?,?,?)";
 for ($i=1;$i<=$num;$i++){
+      $pdo=new PDO(DB_HOST, DB_USER, DB_PWD);
       $stmt=$pdo->prepare($sql);
             $stmt->execute(array($nbr.'/'.$i,$title,$cat,$auth,$pub));
 }
@@ -84,7 +85,14 @@ else{
 ::-moz-selection {
   background-color: #8ac7d8;
 }
-
+ #link{
+            position:absolute;
+            left:10px;top:10px;
+            box-shadow: 0 0 5px;
+        }
+        #link:hover{
+            box-shadow:0 0 50px;
+        }
 
 h1 {
   text-align: center;
@@ -97,7 +105,15 @@ h1, input {
   font-family: "Open Sans", Helvetica, sans-serif;
 }
 
-            
+   #link{
+            position:absolute;
+            left:10px;top:10px;
+            box-shadow: 0 0 5px;
+        }
+        #link:hover{
+            box-shadow:0 0 50px;
+        }
+         
             
             .dropdown-content{
                 max-height:200px;
@@ -105,6 +121,8 @@ h1, input {
         </style>
     </head>
     <body style="overflow-x:hidden;">
+<h2><a href="index.php" id="link" style="color:#37a69b;"><i  class="mdi-hardware-keyboard-backspace"></i></a></h2>
+
     <div class="overlay"></div>
         
       <header class="cd-header">
@@ -297,6 +315,7 @@ h1, input {
           }); 
                 
         </script>
+        <h2><a href="home.php" id="link" style="color:#37a69b;"><i  class="mdi-hardware-keyboard-backspace"></i></a></h2>
         </body>
     </html>
 <?php }?>

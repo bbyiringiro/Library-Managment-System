@@ -24,6 +24,23 @@ unset($_SESSION['temp']);
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <script src="js/modernizr.js"></script> <!-- Modernizr -->
         <style>
+             #link{
+            position:absolute;
+            left:10px;top:10px;
+            box-shadow: 0 0 5px;
+        }
+        #link:hover{
+            box-shadow:0 0 50px;
+        }
+#link{
+            position:absolute;
+            left:10px;top:10px;
+            box-shadow: 0 0 5px;
+        }
+        #link:hover{
+            box-shadow:0 0 50px;
+        }
+
             body{
                 overflow-x:hidden;
             }
@@ -58,6 +75,8 @@ unset($_SESSION['temp']);
       </head>
 
 <body>
+<h2><a href="index.php" id="link" style="color:#37a69b;"><i  class="mdi-hardware-keyboard-backspace"></i></a></h2>
+
     <div class="se-pre-con"></div>
     
 <header class="cd-header">
@@ -98,10 +117,10 @@ unset($_SESSION['temp']);
 				<a href="home.php">Search</a>
 			</li>
             <li>
-				<a href="outsider.php">Teacher and others</a>
+				<a href="teachero.php">Teacher and others</a>
 			</li>
             <li>
-				<a href="uni_search.php">search(Books)</a>
+				<a href="uni_search.php">Search(Books)</a>
 			</li>
 
 			
@@ -124,7 +143,7 @@ unset($_SESSION['temp']);
       <div class="row" style="margin:0;margin-top: -10px;">
         <div class="input-field col s10">
           <input id="look_box" type="text" class="validate" autocomplete="off">
-          <label for="look_box">search</label>
+          <label for="look_box">Search</label>
         </div>
           <div class="input-field col s1 offset-s1" style="margin-left:-5px;">
               <button type="submit" class="btn"><i class="mdi-action-search"></i></button>
@@ -140,7 +159,7 @@ unset($_SESSION['temp']);
             <div class="col m2 s12"><input name="group1" data-name="2" type="radio" id="auth">
       <label for="auth">Author</label></div>
             <div class="col m2 s12"><input name="group1" data-name="3" type="radio" id="pub">
-      <label for="pub">publisher</label></div>
+      <label for="pub">Publisher</label></div>
         </div>
     </form>
             </div>
@@ -154,7 +173,7 @@ unset($_SESSION['temp']);
        <div class="row">
            <h4 id="searching" class="grey-text" ></h4>
            
-                <div class="search_results" id="search_results" style="margin-top:60px;" ></div>  
+                <div class="search_results" id="search_results" style="margin-top:60px; max-height:460px; overflow-y:auto;" ></div>  
 
        </div>
    </div> 
@@ -210,7 +229,7 @@ unset($_SESSION['temp']);
 							var pub = result[i].publisher;
 							var auth = result[i].book_author;
 							var number = result[i].number;
-							resultMarkup += ' <ul class="collapsible popout" data-collapsible="accordion"><li><div class="collapsible-header"><i class="mdi-av-my-library-books"></i>'+title+'<span class="right">'+number+'</span></div><div class="collapsible-body"><p><span>publisher:<b>'+pub+'</b></span><br><span><b>category:'+cat+'</span><br><span >book number: '+no+'</span><br><span >author: '+auth+'</span></p></div></li></ul>';
+							resultMarkup += ' <ul class="collapsible popout" data-collapsible="accordion"><li><div class="collapsible-header"><i class="mdi-av-my-library-books"></i>'+title+'<span class="right">'+number+'</span></div><div class="collapsible-body"><p><span>Publisher:<b>'+pub+'</b></span><br><span><b>category:'+cat+'</span><br><span >book number: '+no+'</span><br><span >author: '+auth+'</span></p></div></li></ul>';
 						};
 
 						//append the results to the results div
@@ -243,7 +262,7 @@ unset($_SESSION['temp']);
 	</script>    
     
     
-      <script src="js/main.js"></script> <!-- Resource jQuery -->
+      <script src="js/main.js"></script> <!-- Resource jQuery --><h2><a href="home.php" id="link" style="color:#37a69b;"><i  class="mdi-hardware-keyboard-backspace"></i></a></h2>
     </body>
   </html>
 

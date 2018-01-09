@@ -62,5 +62,35 @@ if (empty($query))
 echo "nothing";
 else echo json_encode($query);
  
+}elseif(isset($_GET['ts']) && !empty($_GET['ts'])){
+
+
+		//secure the search input
+		$search = trim(mysql_real_escape_string(htmlentities($_GET['ts'])));
+
+		//convert the space in the search to sepreate terms
+		$search_terms = explode(" ", $search);
+		$term_count = 0;
+		$q = "";
+		$result = array();
+		$i = 0;
+
+		foreach ($search_terms as $term) {
+			$term_count++;
+			if($term_count === 1){
+				$q .= "`s_name` LIKE '%$term%' AND class!='fin' AND class!='final' "; 
+			}else{
+				$q .= "AND `s_name` LIKE '%$term%' AND class!='fin' AND class!='final' ";
+			}
+		}
+		
+
+		//prepare the mysql query in PDO
+		$query=$db->getRows('select * from students where '.$q,null);
+if (empty($query))
+echo "nothing";
+else echo json_encode($query);
+ 
 }
-    
+
+?>

@@ -12,8 +12,7 @@ public function  notify($id){
     $date=date("Y-m-d");
 $db=new dbHandler(DB_HOST, DB_USER, DB_PWD);
 $fine=0;
-    
-$query="select  activity.s_id ,activity.book_no ,activity.return_date,activity.due_date ,activity.id,students.s_name,students.class,students.section,books.book_title from activity join students on activity.s_id=students.s_id join books on activity.book_no=books.book_no where activity.checked is null and activity.id>? and activity.fine=? and activity.due_date like ?";
+$query="select  activity.s_id ,activity.book_no ,activity.return_date,activity.due_date ,activity.id,students.s_name,students.class,students.section,books.book_title from activity join students on activity.s_id=students.s_id join books on activity.book_no=books.book_no where activity.checked is null and activity.id>? and activity.fine=? and activity.outsider!=1 and activity.due_date like ?";
 $result=array();
 $result=$db->getRows($query,array($id,$fine,$date.'%'));
 if(!empty($result)){
@@ -24,7 +23,7 @@ echo json_encode($result);
 	$db=new dbHandler(DB_HOST, DB_USER, DB_PWD);
 		$date=date("Y-m-d");
 $fine=0;
-$query="select * from  activity where checked is null  and fine=? and due_date like? ";
+$query="select * from  activity where checked is null  and fine=? and outsider!=1 and due_date like? ";
 $result=$db->getRows($query,array($fine,$date.'%'));
 		$num=0;
 		foreach($result as $res){
@@ -38,7 +37,7 @@ $result=$db->getRows($query,array($fine,$date.'%'));
     public function notified($s_id,$book_no){
         $checked=1;
     $db=new dbHandler(DB_HOST, DB_USER, DB_PWD);
-        $query="update activity set checked=? where s_id=? and book_no=? ";
+        $query="update activity set checked=? where s_id=? and book_no=? and outsider!=1 ";
         $res = $db->db->prepare($query);
 $res->execute(array($checked,$s_id,$book_no));
     }
@@ -52,7 +51,7 @@ $db=new dbHandler(DB_HOST, DB_USER, DB_PWD);
 	
 $fine=0;
     
-$query="select  activity.s_id ,activity.book_no ,activity.return_date,activity.due_date ,activity.id,students.s_name,students.class,students.section,books.book_title from activity join students on activity.s_id=students.s_id join books on activity.book_no=books.book_no where activity.checked is null and activity.fine=? and activity.due_date < ? ORDER BY activity.due_date DESC";
+$query="select  activity.s_id ,activity.book_no ,activity.return_date,activity.due_date ,activity.id,students.s_name,students.class,students.section,books.book_title from activity join students on activity.s_id=students.s_id join books on activity.book_no=books.book_no where activity.checked is null and activity.fine=? and activity.outsider=0 and activity.due_date < ? ORDER BY activity.due_date DESC";
 $result=array();
 	$result=$db->getRows($query,array($fine,$date));
 	if(!empty($result)){

@@ -3,8 +3,104 @@
 include_once 'include/config.php';
 include_once 'include/db.class.php';
 include_once 'include/func.php';
+
+
+ 
 islogged();
+
+       
+      
+         $db=new dbHandler(DB_HOST, DB_USER, DB_PWD);
+        
+ $option="SELECT DISTINCT section FROM `students`  WHERE  'section' NOT IN(select section from students where section='fin' and section='final')";  
+$options=$db->getRows($option);
+
+$uploadedStatus = 0;
+
+
+
+
+if(isset($_POST["register"])){
+    if(!empty($_POST['names'])&&!empty($_POST['section'])&&!empty($_POST['class'])&&!empty($_POST['file'])){
+   $name=htmlentities($_POST['names']);
+   $class=htmlentities($_POST['class']);
+   $section=htmlentities($_POST['section']);
+        if((strtoupper($class)=='S4'||strtoupper($class)=='S5'||strtoupper($class)=='S6')&&(strtoupper($section)=='A'||strtoupper($section)=='B'||strtoupper($section)=='C')){
+            echo "<span class='white'  style='position:absolute;bottom:15px;left:28%;'><b><h3>Make sure class and section make sence<b></h3></span>";
+            break;
+        }else{
+             $tes_n="select * from students where s_name='".$name."' and class='".$class."' and section='".$section."' limit 1";
+         $db=new PDO(DB_HOST, DB_USER, DB_PWD);
+            $stmt=$db->prepare($tes_n);
+        $stmt->execute();
+        $tes_no=$stmt->rowCount();
+     if($tes_no>0){
+         
+        echo "<span class='white'  style='position:absolute;bottom:15px;left:25%;'><b><h3>It seems this student has been  recorded before <b></h3></span>";
+     
+     }else{
+         $insert="insert into students(s_name,class,section) values(?,?,?) ";
+         $stmt=$db->prepare($insert);
+         if($stmt->execute(array($name,$class,$section))){
+              $get_id="select s_id from  students where s_name='".$name."' and class='".$class."' and section='".$section."' limit 1";
+         $db=new dbHandler(DB_HOST, DB_USER, DB_PWD);
+             
+        $get_i=$db->getRows($get_id,array($name,$class,$section));
+         if(!empty($get_i)){
+             list($name, $type, $tmp, $err, $size) = array_values($_FILES['profile']);
+             if($err!=UPLOAD_ERR_OK){
+               echo "<span class='white'  style='position:absolute;bottom:15px;left:34%;'><b><h3>an error occured while uploading you can rename this image manually<b></h3></span>"; 
+            return; }
+             else{
+                $dir_to="/library/pictures/".$get_i[0]['s_id']."";
+                 $absolute = $_SERVER['DOCUMENT_ROOT'] . $dir_to;
+                 if(!move_uploaded_file($tmp, $absolute))
+{
+throw new Exception("Couldn't save the uploaded file!");
+}
+             }
+          echo "<span class='white'  style='position:absolute;bottom:15px;left:29%;'><b>Successfully  recorded with this id:<h3>".$get_i[0]['s_id']."<b></h3></span>";
+     }else{
+             echo "<span class='white'  style='position:absolute;bottom:15px;left:34%;'><b><h3>id not found<b></h3></span>";
+         }
+         }
+        
+     }
+        }
+    
+}else{
+        
+        echo "<span class='white'  style='position:absolute;bottom:15px;left:34%;'><b><h3>please provide info in all fields<b></h3></span>";
+    }
+}
+
+
+
+
+
+
+
+
+if ( isset($_POST["submit"]) ) {
+if ( isset($_FILES["file"])) {
+//if there was an error uploading the file
+if ($_FILES["file"]["error"] > 0) {
+echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
+}
+else {
+
+$file = $_FILES["file"]["tmp_name"];
+
+import_stud($file);
+$uploadedStatus = 1;
+}
+} else {
+echo "No file selected <br />";
+}
+}
 ?>
+
+
 <!Doctype html>
 <html>
     <head>
@@ -16,7 +112,17 @@ islogged();
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/main.css">
         <link rel="stylesheet" href="assets/css/tuto.css">
+        
         <style>
+#link{
+            position:absolute;
+            left:10px;top:10px;
+            box-shadow: 0 0 5px;
+        }
+        #link:hover{
+            box-shadow:0 0 50px;
+        }
+
 ::selection {
   background-color: #b5e2e7;
 }
@@ -91,7 +197,14 @@ h1, input {
 .inputButton:focus {
   outline: none;
 }
-
+#link{
+            position:absolute;
+            left:10px;top:10px;
+            box-shadow: 0 0 5px;
+        }
+        #link:hover{
+            box-shadow:0 0 50px;
+        }
 
             
              .dropdown-content{
@@ -106,6 +219,8 @@ h1, input {
         </style>
     </head>
     <body style="overflow-x:hidden;">
+<h2><a href="index.php" id="link" style="color:#37a69b;"><i  class="mdi-hardware-keyboard-backspace"></i></a></h2>
+
     <div class="overlay"></div>
         
       <header class="cd-header">
@@ -170,13 +285,13 @@ h1, input {
 
 
  <div class="row">
-    <div class="col s12">
-      <ul class="tabs teal">
+    <div class="col s12" style="position:absolute;width:50%;left:25.5%;top:5%;">      
+      <ul class="tabs teal" sytle="width:100%">
         <li class="tab col s3"><a class="active" href="#a">register single</a></li>
         <li class="tab col s3"><a  href="#b">register multiple</a></li>
       </ul> 
     </div>
-      <div id="a">
+      <div id="a" style='position:absolute;top:8%;left:15%'>
           <h1>Registering a student</h1>
         
         <div class="container"> 
@@ -184,45 +299,48 @@ h1, input {
           <div class="row valign-wrapper">
            
                 
-                <form>
+                <form action="<?PHP echo $_SERVER["PHP_SELF"];?>"  method="POST" enctype="multipart/form-data">
                     <div class="input-field col m12">
                        <i class="mdi-action-account-circle prefix"></i>
-                     <input id="icon_prefix" type="text" class="validate">
-                     <label for="icon_prefix">First Name</label>
+                     <input id="icon_prefix" name="names" type="text" class="validate">
+                     <label for="icon_prefix" >Names</label>
                     </div>
                       <div class="input-field col s12">
-    <select>
+    <select name="class">
       <option value="" disabled selected>Choose class</option>
-      <option value="1">s 1</option>
-      <option value="1">s2</option>
-      <option value="1">s3</option>
-      <option value="1">s4</option>
-      <option value="1">s5</option>
-      <option value="1">s6</option>
+      <option value="S1">S1</option>
+      <option value="S1">S2</option>
+      <option value="S1">S3</option>
+      <option value="S1">S4</option>
+      <option value="S1">S5</option>
+      <option value="S1">S6</option>
     </select>
-    <label>class</label>
+    <label name="class">class</label>
   </div>
                      <div class="input-field col s12">
-    <select>
+    <select name="section">
       <option value="" disabled selected>Choose section</option>
-      <option value="1">Option 1</option>
-      <option value="2">Option 2</option>
-      <option value="3">Option 3</option>
+      <?php 
+       foreach($options as $opt):
+        ?>
+        <option value="<?php echo strtoupper($opt['section']);?>"><?php echo strtoupper($opt['section']);?></option>
+        <?php endforeach;
+        ?>
     </select>
     <label>section</label>
   </div>
                     <div class="row input-field col s12">
-    <div class="file-field input-field">
-      <input class="file-path validate" type="text"/>
+    <div class="file-field input-field" >
+      <input class="file-path validate" name="file"  type="text"/>
       <div class="btn">
         <span>profile<i class="mdi-file-file-upload"></i></span>
-        <input type="file"  />
+        <input type="file"  name="profile" />
       </div>
         </div>
     </div>
                     
                     
-         <input type="submit" value="register" class="inputButton"/>       
+         <input type="submit" name="register" value="Register" class="inputButton"/>       
                     
     </form>
 
@@ -232,33 +350,12 @@ h1, input {
 
         
       </div>
-        <div id="b">
+        <div id="b" style="position:absolute;width:73%;top:15%;left:14%;">
             <h1>Upload excel file containing students</h1>
-            <button id="cd-tour-trigger" class="waves-effect waves-teal btn-flat blue-text cd-btn">how to <i class=""></i></button>
+            <button id="cd-tour-trigger" class="waves-effect waves-teal btn-large blue-text cd-btn tooltiped "  data-position="top" data-delay="50" data-tooltip="How to"><i class="large mdi-action-help  "></i></button>
             
             <div class="container">
-            <div class="white card-panel" style="max-height:500px;overflow-y:auto;">
-                     <?php 
-
-$uploadedStatus = 0;
-if ( isset($_POST["submit"]) ) {
-if ( isset($_FILES["file"])) {
-//if there was an error uploading the file
-if ($_FILES["file"]["error"] > 0) {
-echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
-}
-else {
-
-$file = $_FILES["file"]["tmp_name"];
-
-import_stud($file);
-$uploadedStatus = 1;
-}
-} else {
-echo "No file selected <br />";
-}
-}
-?>
+            <div class="white card-panel" style="max-height:200px;overflow-y:auto;">
 </div>
                 
                 <div class="row align-center">
@@ -302,7 +399,7 @@ echo "No file selected <br />";
 
 			<div class="cd-more-info bottom">
 				<h2>Step Number 1</h2>
-				<p>the first step is to allocate where the file is:.</p>
+				<p>make sure you have done promotions to add other classes, if ready the first step is to allocate where the file is:.</p>
 				<img src="img/step-1.png" alt="step 1">
 			</div>
 		</li> <!-- .cd-single-step -->
@@ -322,7 +419,7 @@ echo "No file selected <br />";
 
 			<div class="cd-more-info right">
 				<h2>Step Number 3</h2>
-				<p>make sure that ,in excel file each sheet is named the name of classs and the names  of students are in first column(A); from the top row </p>
+				<p>Make sure that ,in excel file each sheet is named the name of class like "S1  A "</br> and names of students must be in first column you  can see some samples first</p>
 				<img src="img/step-3.png" alt="step 3">
 			</div>
 		</li> <!-- .cd-single-step -->
@@ -336,24 +433,29 @@ echo "No file selected <br />";
         <script src="js/materialize.js" type="text/javascript"></script>
         <script src="js/main.js" type="text/javascript"></script>
         <script src="js/tuto.js" type="text/javascript"></script>
-        <script type="text/javascript">
+         <script type="text/javascript">
 
-        $(document).ready(function() {
+     
+            $(document).ready(function() {
+                $('#res_status').hide();
             $('select').material_select();
-              
+              $('#b').hide();
               
           });
                      
-                    $(document).ready(function(){
-            $('ul.tabs').tabs();
-            $('ul.tabs').css({
-                width:"50%"
-            });
+                    $('.tab').click(function(){
+            
+               
+                      $('#res_status').show();
+               
           }); 
             
             
-            
            
-        </script>
+        </script>  
+        <h2><a href="home.php" id="link" style="color:#37a69b;"><i  class="mdi-hardware-keyboard-backspace"></i></a></h2>
+
+
+
         </body>
     </html>

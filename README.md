@@ -1,1 +1,0 @@
-# Library Managing App

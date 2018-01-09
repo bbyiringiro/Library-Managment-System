@@ -15,6 +15,11 @@ include_once 'include/func.php';
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/main.css">
         <style>
+            .cd-3d-nav li {
+    height: 100%;
+    width: 32%;
+    float: left;
+}
 .card-panel{
     background-color:rgba(33, 33, 33, 0.55);
     color:white;
@@ -63,24 +68,11 @@ include_once 'include/func.php';
 				<a href="home.php">Search</a>
 			</li>
             <li>
-				<a href="outsider.php">Teacher and others</a>
+				<a href="teachero.php">Teacher and others</a>
 			</li>
             <li>
 				<a href="uni_search.php">search(Books)</a>
 			</li>
-
-			<li>
-				<a href="addstud.php">Add student</a>
-			</li>
-
-			<li>
-				<a href="addbook.php">Add books</a>
-			</li>
-
-			<li>
-				<a href="admin-log.php">Admin</a>
-			</li>
-			
 		</ul> <!-- .cd-3d-nav -->
 
 		<span class="cd-marker color-1"></span>	
@@ -109,7 +101,7 @@ include_once 'include/func.php';
                  </div><div class="collapsible-body">
                     <div class="row valign-wrapper card-panel">
                         <div class="col s2">
-                            <img src="pictures/785.JPG" class="responsive-img circle">
+                            <img src="pictures/jason.JPG" class="responsive-img circle">
                         </div>
                         <div class="col s8">
                             <p class="grey-text">
@@ -123,7 +115,7 @@ include_once 'include/func.php';
                  </div><div class="collapsible-body">
                          <div class="row valign-wrapper card-panel">
                         <div class="col s2">
-                            <img src="pictures/821.JPG" class="responsive-img circle">
+                            <img src="pictures/obey.JPG" class="responsive-img circle">
                         </div>
                         <div class="col s8">
                             <p class="grey-text">
@@ -137,7 +129,7 @@ include_once 'include/func.php';
                          
                          <div class="row valign-wrapper card-panel">
                         <div class="col s2">
-                            <img src="pictures/819.JPG" class="responsive-img circle">
+                            <img src="pictures/dlib.JPG" class="responsive-img circle">
                         </div>
                         <div class="col s8">
                             <p class="grey-text">
@@ -149,10 +141,11 @@ include_once 'include/func.php';
                  </div><div class="collapsible-body">
                          <div class="row valign-wrapper card-panel">
                         <div class="col s2">
-                            <img src="pictures/792.JPG" class="responsive-img circle">
+                            <img src="pictures/ish.JPG" class="responsive-img circle">
                         </div>
                         <div class="col s8">
-                            
+                           <p class="grey-text">
+                         Member of FI group ,also  known  as ISH CHRIS ,he was a Headboy in 2015 and has been in  C.S.A for 3 years </p> 
                         </div>
                     </div>
                  </div>
@@ -160,10 +153,11 @@ include_once 'include/func.php';
                  </div><div class="collapsible-body">
                          <div class="row valign-wrapper card-panel">
                         <div class="col s2">
-                            <img src="pictures/789.JPG" class="responsive-img circle">
+                            <img src="pictures/obey.JPG" class="responsive-img circle">
                         </div>
                         <div class="col s8">
-                            
+                            <p class="grey-text">
+                         He is a member of FI group ,he was a for bet master of ceremonies and great planner and has been in  C.S.A for 3 years </p>
                         </div>
                     </div>
                  </div>
@@ -171,10 +165,11 @@ include_once 'include/func.php';
                  </div><div class="collapsible-body">
                          <div class="row valign-wrapper card-panel">
                         <div class="col s2">
-                            <img src="pictures/825.JPG" class="responsive-img circle">
+                            <img src="pictures/nash.JPG" class="responsive-img circle">
                         </div>
                         <div class="col s8">
-                            
+                            <p class="grey-text">
+                         Here we are with our  FI leady Nawal ,call her Nash we don't brame ye!she has been in  C.S.A for 3 years </p>
                         </div>
                     </div>
                  </div>
@@ -182,9 +177,11 @@ include_once 'include/func.php';
                  </div><div class="collapsible-body">
                          <div class="row valign-wrapper card-panel">
                         <div class="col s2">
-                            <img src="pictures/814.JPG" class="responsive-img circle">
+                            <img src="pictures/possen.JPG" class="responsive-img circle">
                         </div>
                         <div class="col s8">
+                            <p class="grey-text">
+                         Well! a motivated FI group member,a geek strong at coding and good at design,he has been in  C.S.A for 3 years </p>
                         </div>
                     </div>
                  </div>

@@ -54,7 +54,7 @@ include_once 'include/db.class.php';
   <div>
     <ul id="notif-today" style="width:100%;height:38em;overflow-x:hidden; overflow-y:auto;">
     </ul>
-	   <ul id="notif-before" style="width:100%;height:41.3em;overflow-x:hidden; overflow-y:auto;">
+	   <ul id="notif-before" style="width:100%;height:38em;overflow-x:hidden; overflow-y:auto;">
     </ul>
   </div>
 	</div>
@@ -65,8 +65,8 @@ include_once 'include/db.class.php';
 		 <!-- for holding switching tab-->	
 		<div class="" style="width:91%;">
 		<ul class="tabs ">
-        <li class="tab"><a class="active green darken-3" href="#notif-today" id="notif-today">today</a></li>
-        <li class="tab"><a class=" green darken-3 " href="#notif-before" id="notif-before" >before</a></li>
+        <li class="tab"><a class="active green darken-3" href="#notif-today" id="notif-today">Today</a></li>
+        <li class="tab"><a class=" green darken-3 " href="#notif-before" id="notif-before" >Before</a></li>
 </ul>
 			</div><div id ="noti-count">
 			<button class=" green-grey-red darken-1 z-depth-3 circle " id="count" >...</button></div>

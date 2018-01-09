@@ -9,9 +9,6 @@ header("location:admin-log.php");
 $db=new dbHandler(DB_HOST, DB_USER, DB_PWD);
 $sql="select * from librarians";
 $res=$db->getRows($sql);
-
-
-
 ?>
 <!Doctype html>
 <html>
@@ -131,7 +128,7 @@ $res=$db->getRows($sql);
            <div class="input-field col s12">
           <i class="mdi-action-search prefix"></i>
           <input id="icon_prefix" type="text" class="validate">
-          <label for="icon_prefix">user Name</label>
+          <label for="icon_prefix">User Name</label>
         </div>
                 
                   <ul class="collection" style="max-height:400px;overflow-y:auto;" id="users">
@@ -166,18 +163,18 @@ $res=$db->getRows($sql);
         <div class="input-field col s12">
           <i class="mdi-action-lock prefix"></i>
           <input  type="password" class="validate" id="pwd" required>
-          <label for="pwd">password</label>
+          <label for="pwd">Password</label>
         </div>
           <div class="input-field col s12">
           <i class="mdi-action-lock-open prefix"></i>
           <input  type="password" class="validate" id="verify" required>
-          <label for="verify">password</label>
+          <label for="verify">Password</label>
         </div>
          
           <div class="input-field col s12">
           <i class="mdi-content-sort prefix"></i>
           <input type="text" class="validate" id="assgn" required>
-          <label for="assgn">user assignment</label>
+          <label for="assgn">User assignment</label>
         </div>
           
          
@@ -211,10 +208,10 @@ $res=$db->getRows($sql);
                         <ul id="profile-dropdown" class="dropdown-content">
                             <li><a href="index.php"><i class="mdi-action-face-unlock"></i>Home</a>
                             </li>
-                            <li><a href="$"><i class="mdi-action-settings"></i> Settings</a>
+                            <li><a href="edit.php"><i class="mdi-action-settings"></i> Settings</a>
                             </li>
                             
-                            <li><a href="#"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
+                            <li><a href="logout.php"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
                             </li>
                         </ul>
                         <p class="user-roal">Administrator</p>
@@ -227,15 +224,17 @@ $res=$db->getRows($sql);
 </a>
                  
              </li>
-    <li><a href="#!" id="report">make reports                  <i class="mdi-action-view-headline right blue-text"></i>
+    <li><a href="#!" id="report">Make reports                  <i class="mdi-action-view-headline right blue-text"></i>
 </a></li>
-    <li><a href="#!">add categories</a></li>
-    <li><a href="edit.php">settings</a></li>
+    <li><a href="accounts.php">Student's accounts<i class="mdi-action-settings-input-component right blue-text"></i></a></li>
+    <li><a href="lost.php">Books lost<i class="mdi-action-dashboard right blue-text"></i></a></li>
+    <li><a href="edit.php">Settings     <i class="mdi-action-settings-applications right blue-text"></i></a></li>
+             
   </ul>
   <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
-        <div class="footer center" style="margin-left:245px;">
+  <div class="footer center" style="margin-left:245px;">
 								Copyright &copy; 2015, Designed by 
-                                <a title="web designer" data-container="body" data-toggle="popover" data-placement="top" data-content="This web was designed by billy jason ,who's student and he has worked on many geek projects, he is good at both front-end  and server-side" rel="designer">Billy jason</a> in<a> Fi.inc</a> 
+                                <a title="web designer" data-container="body" data-toggle="popover" data-placement="top" data-content="This web was designed by billy jason ,who's student and he has worked on many geek projects, he is good at both front-end  and server-side" rel="designer">Billy jason </a> in<a> Fi.inc</a> 
 				</div>
     
         
@@ -247,7 +246,7 @@ $res=$db->getRows($sql);
           <ul>
             
             <li><a href="export.php?allstud=1" class="btn-floating yellow darken-1 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Make report of all students(to desktop)"  style="transform: scaleY(0.4) scaleX(0.4) translateY(40px); opacity: 0;"><i class="large mdi-editor-insert-chart"></i></a></li>
-            <li><a  href="export.php?report=1" class="btn-floating green tooltipped" data-position="bottom" data-delay="50" data-tooltip="make report of these students<br> who owe the books(to desktop)" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px); opacity: 0;"><i class="large mdi-editor-publish"></i></a></li>
+            <li><a  href="export.php?report=1" class="btn-floating green tooltipped" data-position="bottom" data-delay="50" data-tooltip="Make report of all students who owe books(to desktop)" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px); opacity: 0;"><i class="large mdi-editor-publish"></i></a></li>
           </ul>
         </div>
         
@@ -370,8 +369,6 @@ $res=$db->getRows($sql);
                                      
                              });
     });
-    
-    
     
     $('#name').keyup(function(){     
     var name=$('#name').val();

@@ -1,6 +1,3 @@
-
-
-
  <?php 
 include_once 'include/func.php';
 if ( isset($_POST["submit"]) ) {

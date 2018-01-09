@@ -1,1 +1,1 @@
-<a href="../"><--go back</a>
+<a href="../">back</a>

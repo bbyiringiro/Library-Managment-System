@@ -70,7 +70,7 @@ unset($_SESSION['temp']);
   <label for="toggle2" style="position:absolute;right:0;top:-0.5em;"><i class="label mdi-navigation-arrow-drop-down-circle" style="font-size:2em;padding:0px;"></i></label>
   <ul class="animate">
     
-    <a href="index1.php" style="color:black"><li class="animate">login (<i style="color:blue;font-size:10px">only admins</i>)<i class="fa fa-cog float-right"></i></li></a>
+    <a href="index1.php" style="color:black"><li class="animate">Login (<i style="color:blue;font-size:10px">only admins</i>)<i class="fa fa-cog float-right"></i></li></a>
   </ul>
 </dropdown>
      
@@ -79,7 +79,7 @@ unset($_SESSION['temp']);
     <div id="search-container">
 		
 	        <form action="check_stud.php" method="get">
-			<input id="search" type="search" placeholder="Quick Search" name="id" autocomplete="off"/>
+			<input id="seart" type="search" placeholder="Quick Search" name="id" autocomplete="off"/>
                 </form>
 			<ul style="position:absolute;width:250px;" class="z-depth-3">
 			</ul>
@@ -96,10 +96,10 @@ unset($_SESSION['temp']);
 				<a href="home.php">Search</a>
 			</li>
             <li>
-				<a href="outsider.php">Teacher and others</a>
+				<a href="teachero.php">Teacher and others</a>
 			</li>
             <li>
-				<a href="uni_search.php">search(Books)</a>
+				<a href="uni_search.php">Search(Books)</a>
 			</li>
 
 			
@@ -171,7 +171,6 @@ unset($_SESSION['temp']);
         <script type="text/javascript">
   //ready the dom.
 $(document).ready(function(){
-  
   //when the search box is entered
   $(".search").focus(function(){
     //slideDown the results div
@@ -202,7 +201,7 @@ if (keyword.length >= 2) {
 	$.ajax({
 		url: 'search.php',
 		type: 'GET',
-		data: { s: keyword},
+		data: {ts: keyword},
 		beforeSend: function(){
 			$('#suggest').html('');
 			$('.preloader-wrapper').addClass("active");
@@ -246,18 +245,30 @@ if (event.type == 'mouseover') {
 	 
 
     });
-            
+            function backing_up(){
+                
+                $.ajax({
+                    url:'db_backup.php',type:'GET',data:{backup_db:'ok'}
+              
+            });
+            }
+           
+$(document).ready(function(){
+  setInterval(function(){
+      backing_up();
+  },5000);
+});
             
             $(document).keypress(function(evt){
    
                     $('#searchbox').focus();
                 
           });
-            $('#search').keypress(function(evt){
+            $('#seart').keypress(function(evt){
    
                      $(document).keypress(function(evt){
    
-                    $('#search').focus();
+                    $('#seart').focus();
                 
           });
                 

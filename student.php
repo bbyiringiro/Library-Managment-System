@@ -13,9 +13,9 @@ if(empty($res))
 header("location:404");
 
 //sql about the pending books
-$sql="select b.book_title  b_name ,b.book_no 'nbr',a.due_date 'date_borrowed',a.return_date 'return' from activity a inner join books b on a.book_no=b.book_no where a.s_id=? and a.fine=0 and a.outsider=0 order by date_borrowed desc";
+$sql="select b.book_title  b_name ,b.book_no 'nbr',a.due_date 'date_borrowed',a.return_date 'return',a.current_class 'current' from activity a inner join books b on a.book_no=b.book_no where a.s_id=? and a.fine=0 and a.outsider=0 order by date_borrowed desc";
 //sql about the the history
-$sql2="select b.book_title  b_name ,b.book_no 'nbr',a.due_date 'date_borrowed',a.return_date 'return'  from activity a inner join books b on a.book_no=b.book_no where a.s_id=? and a.fine=1 and a.outsider=0 order by date_borrowed desc ";
+$sql2="select b.book_title  b_name ,b.book_no 'nbr',a.due_date 'date_borrowed',a.return_date 'return',a.current_class 'current' from activity a inner join books b on a.book_no=b.book_no where a.s_id=? and a.fine=1 and a.outsider=0 order by date_borrowed desc ";
  /* codes about fetching transaction from server --> */
 //pending
          $pending=$db->getRows($sql,array($stud));
@@ -355,17 +355,18 @@ background-color:#fff;
           <div class="card">
             <div class="card-image">
               <img src="<?php echo $studentpic ;?>">
-              <span class="card-title"><?php $n=explode(' ',$res[0]['s_name']);echo $n[0];?></span>
+                <span class="card-title"><?php $n=explode(' ',$res[0]['s_name']);echo strtoupper($n[0]);?></span>
             </div>
             <div class="card-content">
               <p><b>Name</b>:<?php echo strtoupper($res[0]['s_name']);?></p>
+<input type="hidden" id="ahoyigaga" value="<?php echo ucwords($res[0]['class']).' '.ucwords( $res[0]['section']);?>"/>
               <p><b>Class</b> <?php echo ucwords($res[0]['class']).' '.ucwords( $res[0]['section']);?></p>
               <p><b>Number</b> <?php echo $res[0]['s_id'] ?></p>
             </div>
             <div class="card-action">
               <div class="row valign-wrapper">
                   <div id="owe_nbr" class="col m6"><h5>0 Books</h5></div>
-                  <div class="col m6">since 2015</div>
+                  <div class="col m6">Since 2015</div>
               </div>
             </div>
           </div>
@@ -380,7 +381,7 @@ background-color:#fff;
                           <div class="row">
                           <div class="input-field col m10">
           <i class="mdi-action-account-circle prefix"></i>
-          <input id="icon_prefix" type="text"  class="validate">
+          <input id="icon_prefix" type="text" autocomplete="off" class="validate">
           <label for="icon_prefix">Enter book ID</label>
         
         </div>
@@ -427,7 +428,7 @@ background-color:#fff;
               <th data-field="price">ISBN</th>
               <th data-field="due_date">Due date</th>
               <th data-field="day">Return
-              </th> <th data-field="day">Current<br>
+              </th> <th data-field="day">
                   class
               </th> 
               </th>
@@ -463,6 +464,7 @@ foreach ($pending as $row):
             <td class="book-nbr"><?php echo $row['nbr'] ?></td>
             <td><?php echo $row['date_borrowed'] ?></td>
             <td><?php echo $row['return'] ?></td>
+              <td><?php echo $row['current'] ?></td>
           </tr>
          
         
@@ -484,8 +486,8 @@ foreach ($pending as $row):
               <th data-field="name">Name</th>
               <th data-field="price">ISBN</th>
               <th data-field="due_date">due date</th>
-              <th data-field="day">return<br>
-                  days
+              <th data-field="day">returned<br>
+              
               </th>
           </tr>
         </thead>
@@ -629,6 +631,8 @@ foreach ($hist as $row2):
            
   
         $(document).ready(function(){
+var curr=$('#ahoyigaga').val();
+            
             /*
                $(window).ready(function(){
                 $(window).on("contextmenu",function(){
@@ -673,7 +677,7 @@ foreach ($hist as $row2):
         		    	//calling function to output on screen
                         thiss=$(this);
                         $('#datepicker').css({color:'black'})
-        		    	lendbook(nbr,name,dat,thiss);
+        		    	lendbook(nbr,name,dat,thiss,curr);
                         updateP_nbr();
         		    	
         		    })
@@ -694,7 +698,7 @@ foreach ($hist as $row2):
      	    	 type:'GET',
      	    	 data:{back:'',book_nbr:book_nbr,user:user},
      	    	 success: function(data) {
-     	    	 Materialize.toast('<span>good!! you take back a book </span><a class="btn-flat yellow-text" onclick="undo(event);" href="#1">Undo<a>', 5000)
+     	    	 Materialize.toast('<span>Good!!you take it back  </span>', 5000)
      	    	 }
      	    	 });
         	   
@@ -704,12 +708,12 @@ foreach ($hist as $row2):
         	    });
     	    
 
-    	    function lendbook(book_nbr,name,d,thiss)
+    	    function lendbook(book_nbr,name,d,thiss,curr)
     	    {
     	    	$.ajax({
         	    	 url: 'ajax/lend.php',
         	    	 type:'GET',
-        	    	 data:{lend:'',book_nbr:book_nbr,user:<?php echo $stud?>,date:d},
+        	    	 data:{lend:'',book_nbr:book_nbr,user:<?php echo $stud?>,date:d,current:curr},
 	success: function(msg){
 		if(msg==1){
             thiss.effect('shake');
@@ -719,7 +723,7 @@ foreach ($hist as $row2):
             var now=new Date();
             thiss.slideUp('5000');
             $('.no-pending').fadeOut();
-			$('#pending tbody').prepend('<tr> <td class="tick waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="It is not allowed to immediately do this(refresh)"><div class="check-row ><input type="checkbox" id="'+book_nbr+'" class="hidden" disabled=disabled /><label class="check-label" for="'+book_nbr+'"><div class="check-box"><i class="fa fa-square-o check-off"></i><i class="fa fa-check check-on"></i></div></label></div></td><td class="book-title">'+name+'</td><td class="book-nbr">'+book_nbr+'</td><td class="truncate">'+now+'</td><td>'+d+'</td><td class="status">0</td></tr>');
+			$('#pending tbody').prepend('<tr> <td class="tick waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="It is not allowed to immediately do this(refresh)"><div class="check-row ><input type="checkbox" id="'+book_nbr+'" class="hidden" disabled=disabled /><label class="check-label" for="'+book_nbr+'"><div class="check-box"><i class="fa fa-square-o check-off"></i><i class="fa fa-check check-on"></i></div></label></div></td><td class="book-title">'+name+'</td><td class="book-nbr">'+book_nbr+'</td><td class="truncate">'+now+'</td><td>'+d+'</td><td class="status">...</td></tr>');
                       $('.tooltipped').tooltip({delay: 50});
 
 		}
@@ -848,8 +852,8 @@ $('#book_id').keyup(function(){
         
         $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
-    selectYears: 15 // Creates a dropdown of 15 years to control year
-  });
+    selectYears: 1, // Creates a dropdown of 15 years to control year
+ min:true });
         
         
 
