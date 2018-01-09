@@ -1,0 +1,228 @@
+#loader span{
+                display:none;
+            }
+            body{
+                background: #d3d4d5;
+            }
+            .book-suggest{
+                max-height: 250px;
+                overflow-y: scroll;
+            }
+            .book-suggest li{
+                list-style:none;
+                margin-bottom:5px;
+            }
+            
+            
+            
+.card .card-image{
+max-height:270px;}
+
+
+
+            
+            .book_name{
+                padding-left:0;
+            }
+            
+            
+            
+
+            
+            #suggest{
+                  width: 100%;
+  position: absolute;
+  top: 100px;
+  left: 0px;
+  opacity: 1;
+  max-height: 300px;
+  overflow-y: auto;
+box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+                border-top:none;
+                opacity: 1;
+  border: none;
+                
+            }
+            
+
+#suggest .item {
+	padding: 3px;
+	font-family: Helvetica;
+	border-bottom: 1px solid #c0c0c0;
+    color:white;
+    border-radius:15px;
+}
+
+#suggest .item:last-child {
+	border-bottom: 0px;
+}
+
+#suggest .item:hover {
+	background-color: #f2f2f2;
+	cursor: pointer;
+}
+            #suggest span{
+                  margin-top: 10px;
+  font-weight: 300;
+  font-size: 0.8rem;
+  color: #D9C7C7;
+  background-color: rgba(33, 104, 83, 0.69);
+  border-radius: 2px;
+            }
+
+            
+            
+            
+            
+            
+            
+            
+.logo {
+  position: fixed;
+  bottom: 3vh;
+  left: 3vw;
+  z-index: 2;
+}
+.logo img {
+  width: 45px;
+  -webkit-transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+          transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-transform: rotate(0);
+      -ms-transform: rotate(0);
+          transform: rotate(0);
+}
+.logo img:hover {
+  -webkit-transform: rotate(180deg) scale(1.1);
+      -ms-transform: rotate(180deg) scale(1.1);
+          transform: rotate(180deg) scale(1.1);
+}
+
+
+
+.cd-header {
+  background-color: rgba(29, 23, 23, 0.61);
+    border-radius: 5px;}
+            .card-panel {
+  padding: 3px;
+                margin:0;
+  margin-bottom:2px;
+  border-radius: 2px;
+  background-color: rgba(117, 116, 116, 0.88);
+            }
+            
+            
+ 
+            
+            
+            
+/* check box styles: */
+.hidden {
+  display: none;
+}
+
+.check-label {
+    font-size: 30px;
+  cursor: pointer;
+  display: inline-block;
+  -webkit-perspective: 0;
+  perspective: 0;
+  -webkit-perspective-origin: center center;
+  perspective-origin: center center;
+}
+
+
+.check-box {
+  display: inline-block;
+  vertical-align: middle;
+  left: 0;
+  top: 0;
+  width: 1.5em;
+  height: 1.5em;
+  -webkit-transition: all 0.25s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  transition: all 0.25s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  -webkit-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+[type=checkbox]:checked + .check-label .check-box {
+  -webkit-transform: rotateX(90deg);
+  -ms-transform: rotateX(90deg);
+  transform: rotateX(90deg);
+  -webkit-transition: all 0.45s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transition: all 0.45s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.check-off, .check-on {
+  display: inline-block;
+  font-size: 1.5em;
+  position: absolute;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+}
+
+.check-off {
+  color: #a525c9;
+  -webkit-transform: translateZ(0.5em);
+  -ms-transform: translateZ(0.5em);
+  transform: translateZ(0.5em);
+}
+
+.check-on {
+  color: #00b300;
+  -webkit-transform: rotateX(-90deg) translateZ(0.5em);
+  -ms-transform: rotateX(-90deg) translateZ(0.5em);
+  transform: rotateX(-90deg) translateZ(0.5em);
+}
+
+th, td{
+    padding:0;
+    border-right: 1px solid #C1C3D1;
+}
+th{
+text-align:center;
+}
+.hist tr{padding:100px;
+}
+
+            
+
+tr:hover td {
+  background:#4E5066;
+  color:#FFFFFF;
+  border-top: 1px solid #22262e;
+  border-bottom: 1px solid #22262e;
+}
+table{
+background-color:#fff;
+}
+            .hist td,.hist th{
+            padding:10px;}
+            
+           .card .card-image img{
+               max-height:280px;
+           }
+            
+            
+            .card .card-action{
+                background-color: #648478;
+    padding: 5px;
+            }
+.card .card-content{
+    padding: 5px;
+        padding-top: 10px
+            }
+            .book-suggest .row{
+                margin-bottom:0px;
+            }
+            .truncate{
+                max-width:100px;
+            }
+            .tag{
+                font-size:small;
+                opacity:0.5;
+            }
+           .waves-effect {
+                   display:block;
+           }
+            
