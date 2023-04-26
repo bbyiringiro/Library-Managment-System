@@ -24,7 +24,9 @@ Install MySQL and create a new database for the library management system.
 Clone the repository:
 bash
 Copy code
-git clone https://github.com/yourusername/library-management-system.git
+```
+git clone https://github.com/bbyiringiro/Library-Managment-System.git
+```
 Configure your web server to serve the project directory.
 Import the provided SQL file (e.g., library_management.sql) into your MySQL database.
 Edit the config.php file to set your database credentials.
@@ -34,11 +36,11 @@ Open your web browser and navigate to the project URL (e.g., http://localhost/li
 
 The project consists of the following key files and directories:
 
-index.php: The main entry point for the application.
-config.php: Contains database configuration settings.
-assets/: Contains all static assets, such as images, CSS, and JavaScript files.
-includes/: Contains reusable PHP scripts, such as database connection and utility functions.
-pages/: Contains individual PHP pages for different functionalities, such as book management and member registration.
+* index.php: The main entry point for the application.
+* config.php: Contains database configuration settings.
+* assets/: Contains all static assets, such as images, CSS, and JavaScript files.
+* includes/: Contains reusable PHP scripts, such as database connection and utility functions.
+* pages/: Contains individual PHP pages for different functionalities, such as book management and member registration.
 
 ## Contributing
 
