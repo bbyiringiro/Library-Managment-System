@@ -1,6 +1,6 @@
 # Library Management System
 
-This repository contains a library management system developed using PHP, jQuery, JavaScript, HTML, CSS, and MySQL back in 2014-2015. This project was developed during high school (2014-2015) and serves as a great example of an early web development project. You can watch the [https://www.youtube.com/watch?v=v8cuZL6tEbk](project demo video on YouTube): https://www.youtube.com/watch?v=v8cuZL6tEbk.
+This repository contains a library management system developed using PHP, jQuery, JavaScript, HTML, CSS, and MySQL back in 2014-2015. This project was developed during high school (2014-2015) and serves as a great example of an early web development project. You can watch the [project demo video on YouTube](https://www.youtube.com/watch?v=v8cuZL6tEbk): https://www.youtube.com/watch?v=v8cuZL6tEbk.
 
 ## Features
 
